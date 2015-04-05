@@ -4,7 +4,8 @@
   "description": "CRUD in React using Firebase",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp serve"
   },
   "repository": {
     "type": "git",
@@ -12,6 +13,16 @@
   },
   "author": "Michał Lach",
   "license": "MIT",
+  "devDependencies": {
+    "react": "^0.13.1",
+    "gulp-concat": "^2.5.2",
+    "gulp-open": "^0.3.2",
+    "gulp-react": "^3.0.1",
+    "gulp": "^3.8.11",
+    "gulp-connect": "^2.2.0",
+    "reactify": "^1.1.0",
+    "gulp-browserify": "^0.5.1"
+  },
   "bugs": {
     "url": "https://github.com/padsbanger/react-crud/issues"
   },
