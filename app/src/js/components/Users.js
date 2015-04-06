@@ -18,11 +18,24 @@ var Users = React.createClass({
     };
   },
 
+  onToggleForm: function() {
+    this.setState({
+      formDisplayed: !this.state.formDisplayed
+    });
+  },
+
+  onNewUser: function(newUser) {
+    var newUsers = this.state.users.concat([newUser]);
+    this.setState({
+      users: newUsers
+    });
+  },
+
   render: function() {
     return (
       <div className="container">
-        <ShowAddButton />
-        <UserForm />
+        <ShowAddButton displayed={this.state.formDisplayed} onToggleForm={this.onToggleForm} />
+        <UserForm  displayed={this.state.formDisplayed} onNewUser={this.onNewUser}/>
         <UsersList users={this.state.users}/>
       </div>
       );

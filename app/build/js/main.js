@@ -5,8 +5,18 @@ var React = require('react');
 
 var ShowAddButton = React.createClass({displayName: "ShowAddButton",
   render: function() {
+
+  var classString, buttonText;
+
+  if (this.props.displayed) {
+    classString = 'btn btn-info btn-block';
+    button = 'Cancel';
+  } else {
+    classString = 'btn btn-success btn-block';
+    button = 'Create New User';
+  }
     return (
-        React.createElement("button", {className: "btn btn-success btn-block"}, "Create new User")
+        React.createElement("button", {className: classString, onClick: this.props.onToggleForm}, button)
       );
   }
 });
@@ -36,12 +46,31 @@ module.exports = User;
 var React = require('react');
 
 var UserForm = React.createClass({displayName: "UserForm",
+
+  handleForm: function(e) {
+    e.preventDefault();
+    var newUser = {
+      name: this.refs.name.getDOMNode().value,
+      age: this.refs.age.getDOMNode().value
+    };
+
+    this.refs.userForm.getDOMNode().reset();
+
+    this.props.onNewUser(newUser);
+
+  },
+
   render: function() {
+    var display = this.props.displayed ? 'block': 'none';
+    var styles = {
+      display: display
+    };
     return (
-      React.createElement("form", {id: "userForm"}, 
+      React.createElement("form", {style: styles, ref: "userForm", id: "userForm", onSubmit: this.handleForm}, 
         React.createElement("div", {className: "form-group"}, 
-          React.createElement("input", {type: "text", className: "form-control", placeholder: "Name"}), 
-          React.createElement("button", {className: "btn btn-primary btn-block"}, "Add user")
+          React.createElement("input", {type: "text", ref: "name", className: "form-control", placeholder: "Name"}), 
+          React.createElement("input", {type: "number", ref: "age", className: "form-control", placeholder: "Age"}), 
+          React.createElement("button", {type: "submit", className: "btn btn-primary btn-block"}, "Add user")
         )
       )
       );
@@ -71,11 +100,24 @@ var Users = React.createClass({displayName: "Users",
     };
   },
 
+  onToggleForm: function() {
+    this.setState({
+      formDisplayed: !this.state.formDisplayed
+    });
+  },
+
+  onNewUser: function(newUser) {
+    var newUsers = this.state.users.concat([newUser]);
+    this.setState({
+      users: newUsers
+    });
+  },
+
   render: function() {
     return (
       React.createElement("div", {className: "container"}, 
-        React.createElement(ShowAddButton, null), 
-        React.createElement(UserForm, null), 
+        React.createElement(ShowAddButton, {displayed: this.state.formDisplayed, onToggleForm: this.onToggleForm}), 
+        React.createElement(UserForm, {displayed: this.state.formDisplayed, onNewUser: this.onNewUser}), 
         React.createElement(UsersList, {users: this.state.users})
       )
       );
