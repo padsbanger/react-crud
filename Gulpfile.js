@@ -8,7 +8,7 @@ var port = process.env.port || 1337;
 
 
 gulp.task('browserify', function() {
-    gulp.src('./app/src/components/main.js')
+    gulp.src('./app/src/js/main.js')
         .pipe(browserify({
             transform: 'reactify'
         }))
@@ -50,10 +50,9 @@ gulp.task('js', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('./app/src/less/*.less', ['less']);
-    gulp.watch('./app/src/js/*.js', ['js']);
+    gulp.watch('./app/src/less/style.less', ['less']);
+    gulp.watch('./app/src/js/**/*.js', ['browserify','js']);
     gulp.watch('./app/*.html', ['html']);
-    gulp.watch('./app/js/src/**/*.js', ['browserify']);
 });
 
 gulp.task('serve', ['browserify', 'less', 'connect', 'open', 'watch'])
