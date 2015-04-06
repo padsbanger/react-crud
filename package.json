@@ -23,7 +23,8 @@
     "reactify": "^1.1.0",
     "gulp-browserify": "^0.5.1",
     "less": "^2.5.0",
-    "gulp-less": "^3.0.2"
+    "gulp-less": "^3.0.2",
+    "firebase": "^2.2.3"
   },
   "bugs": {
     "url": "https://github.com/padsbanger/react-crud/issues"

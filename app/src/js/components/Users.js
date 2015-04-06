@@ -4,16 +4,30 @@ var React = require('react');
 var ShowAddButton = require('./ShowAddButton');
 var UserForm = require('./UserForm');
 var UsersList = require('./UsersList');
+var Firebase = require('firebase');
 
 var Users = React.createClass({
+
+  componentDidMount: function() {
+    var ref = new Firebase('https://react-test123.firebaseio.com/users');
+    ref.on('value', function(snap) {
+      var items = [];
+
+      snap.forEach(function(itemSnap) {
+        var item = itemSnap.val();
+        item.key = itemSnap.name();
+        items.push(item);
+      });
+
+      this.setState({
+        users: items
+      });
+    }.bind(this));
+  },
+
   getInitialState: function() {
-    var usersList = [
-      {id: '1', name: 'Michal', age: 12},
-      {id: '2', name: 'Artyom', age: 25},
-      {id: '3', name: 'Strielok', age: 34}
-    ];
     return {
-      users: usersList,
+      users: [],
       formDisplayed: false
     };
   },
@@ -25,10 +39,12 @@ var Users = React.createClass({
   },
 
   onNewUser: function(newUser) {
-    var newUsers = this.state.users.concat([newUser]);
-    this.setState({
-      users: newUsers
-    });
+    var ref = new Firebase('https://react-test123.firebaseio.com/users');
+    ref.push(newUser);
+  },
+
+  onRemoveUser: function(user) {
+
   },
 
   render: function() {
