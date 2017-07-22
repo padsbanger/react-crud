@@ -1,6 +1,6 @@
-#This repo it quite old and all of the code here should be considered as depreacted and bad pratice.
+# This repo it quite old and all of the code here should be considered as depreacted and bad pratice.
 
-#react-crud
+# react-crud
 
 A simple CRUD application using React.js and Browserify hooked up to Firebase.
 
